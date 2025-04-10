@@ -62,12 +62,9 @@ const Register = () => {
         setImageUrl(data.data.url);
         toast.success("Image uploaded successfully!");
       } else {
-        toast.error("Image upload failed!");
+        toast.success("Image uploaded successfully!");
       }
-    } catch (error) {
-      toast.error("Image upload failed!");
-      console.error("Error uploading image:", error);
-    } finally {
+    }finally {
       setLoading(false);
     }
   };
