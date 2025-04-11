@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,9 +10,11 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import { BsPersonFill } from "react-icons/bs";
 import { FaPhoneAlt } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../provider/AuthProvider";
 
 
 const Register = () => {
+  const {createUser} =useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
@@ -72,7 +74,14 @@ const Register = () => {
   const onSubmit = async (data) => {
     try {
       setLoading(true);
-      
+      createUser(data.email, data.password)
+        .then((result) => {
+          const user = result.user;
+          console.log("User created:", user);
+        })
+        .catch((error) => {
+          console.error(error)
+        })
       // Prepare user data for API
       const saveUser = {
         name: data.name,

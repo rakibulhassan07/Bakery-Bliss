@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { TbFidgetSpinner } from 'react-icons/tb';
 
 const Login = () => {
-    const  signIn  = useContext(AuthContext);
+    const  {signIn}  = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -33,25 +33,52 @@ const Login = () => {
         const form = new FormData(e.currentTarget);
         const email = form.get("email");
         const password = form.get("password");
-
+        console.log(email, password);
+        // Validate password before proceeding
         if (!validatePassword(password)) {
             return;
         }
+
+        setLoading(true);
+        signIn(email, password)
+            .then((result) => { 
+                const user = result.user;
+                console.log(user);  
+                toast.success("Welcome back to the Bakery Portal!");
+                // Wait for toast to be visible before navigation
+                setTimeout(() => {
+                    const redirectPath = location.state?.from?.pathname || "/";
+                    navigate(redirectPath, { replace: true });
+                }, 1000); // Short delay to ensure toast is visible
+
+            })
+            .catch((error) => {
+                console.error(error);
+                toast.error("Login failed! Please check your credentials");
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+
+
+       // if (!validatePassword(password)) {
+        //    return;
+       // }
         
-        try {
-            setLoading(true);
-            await signIn(email, password);
-            toast.success("Welcome back to the Bakery Portal!");
+       // try {
+         //   setLoading(true);
+          //  await signIn(email, password);
+         //   toast.success("Welcome back to the Bakery Portal!");
             // Wait for toast to be visible before navigation
-            setTimeout(() => {
-                const redirectPath = location.state?.from?.pathname || "/bakery-dashboard";
-                navigate(redirectPath, { replace: true });
-            }, 1000); // Short delay to ensure toast is visible
-        } catch (error) {
-            toast.error("Login failed! Please check your credentials");
-        } finally {
-            setLoading(false);
-        }
+        //    setTimeout(() => {
+        //        const redirectPath = location.state?.from?.pathname || "/bakery-dashboard";
+      //          navigate(redirectPath, { replace: true });
+      //      }, 1000); // Short delay to ensure toast is visible
+      //  } catch (error) {
+     //       toast.error("Login failed! Please check your credentials");
+     //   } finally {
+    //        setLoading(false);
+     //   }
     };
 
     return (

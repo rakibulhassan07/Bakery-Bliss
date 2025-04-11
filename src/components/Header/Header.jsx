@@ -3,12 +3,17 @@ import { Link, NavLink } from "react-router-dom";
 import { MdOutlineBakeryDining } from "react-icons/md";
 import { FaBreadSlice, FaCookieBite, FaShoppingCart } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const { user,logOut } = useContext(AuthContext);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+  
+  const handleSingOut = () => {
+    logOut()
   };
 
   // Active link style
@@ -106,12 +111,18 @@ const Header = () => {
           </Link>
 
           {/* Login button */}
-          <Link
-            to="/Login"
-            className="btn bg-gradient-to-r from-amber-600 to-amber-700 text-white hover:from-amber-700 hover:to-amber-800 border-0 shadow-md"
-          >
-            Login
-          </Link>
+          {user ? (
+            <button onClick={handleSingOut} className="btn bg-gradient-to-r from-amber-600 to-amber-700 text-white hover:from-amber-700 hover:to-amber-800 border-0 shadow-md">
+              Logout
+            </button>
+          ) : (
+            <Link
+              to="/Login"
+              className="btn bg-gradient-to-r from-amber-600 to-amber-700 text-white hover:from-amber-700 hover:to-amber-800 border-0 shadow-md"
+            >
+              Login
+            </Link>
+          )}
 
           {/* Mobile menu button */}
           <div className="md:hidden">
