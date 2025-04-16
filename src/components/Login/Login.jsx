@@ -107,7 +107,7 @@ const Login = () => {
                         className="text-center lg:text-left w-full flex flex-col items-center"
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }} //make 
-                        transition={{ duration: 0.8, ease: "easeInOut" }}
+                        transition={{ duration: 0.8, ease: "easeInOut" }}// jdsms
                     >
                         <h1 className="text-4xl font-bold text-amber-800 mb-4">Bakery Portal</h1>
                         <iframe
