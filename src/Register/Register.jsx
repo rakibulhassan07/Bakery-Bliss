@@ -82,7 +82,7 @@ const Register = () => {
         .catch((error) => {
           console.error(error)
         })
-      // Prepare user data for API
+      // Prepare user data for APIs
       const saveUser = {
         name: data.name,
         photo: imageUrl, // This will match 'image' in PHP
