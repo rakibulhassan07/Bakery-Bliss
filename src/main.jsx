@@ -12,6 +12,7 @@ import Root from './components/layouts/Root.jsx';
 import Login from './components/Login/Login.jsx';
 import AuthProvider from './provider/AuthProvider.jsx';
 import Register from './Register/Register.jsx';
+import BakeryBlissRealtimeChat from './components/BakeryBlissRealtimeChat/BakeryBlissRealtimeChat.jsx';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element:<Register></Register>
+      },
+      {
+        path: "/inbox",
+        element:<BakeryBlissRealtimeChat></BakeryBlissRealtimeChat>
       }
       
     ]
