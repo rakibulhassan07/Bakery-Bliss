@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { MdOutlineBakeryDining } from "react-icons/md";
-import { FaBreadSlice, FaCookieBite, FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { AuthContext } from "../../provider/AuthProvider";
 
@@ -54,7 +54,7 @@ const Header = () => {
             </li>
             <li>
               <NavLink
-                to="/Products"
+                to="/products"
                 className={({ isActive }) =>
                   isActive ? activeStyle : "text-amber-800 hover:bg-amber-100"
                 }
@@ -64,7 +64,7 @@ const Header = () => {
             </li>
             <li>
               <NavLink
-                to="/CustomOrders"
+                to="/customerOrder"
                 className={({ isActive }) =>
                   isActive ? activeStyle : "text-amber-800 hover:bg-amber-100"
                 }
@@ -74,7 +74,7 @@ const Header = () => {
             </li>
             <li>
               <NavLink
-                to="/Become_a_Baker"
+                to="/becomeABaker"
                 className={({ isActive }) =>
                   isActive ? activeStyle : "text-amber-800 hover:bg-amber-100"
                 }

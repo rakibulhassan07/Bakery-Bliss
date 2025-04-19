@@ -13,6 +13,9 @@ import Login from './components/Login/Login.jsx';
 import AuthProvider from './provider/AuthProvider.jsx';
 import Register from './Register/Register.jsx';
 import BakeryBlissRealtimeChat from './components/BakeryBlissRealtimeChat/BakeryBlissRealtimeChat.jsx';
+import BecomeABaker from './components/BecomeABaker/BecomeABaker.jsx';
+import CustomerOrder from './components/CustomerOrder/CustomerOrder.jsx';
+import Products from './components/Products/Products.jsx';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +37,18 @@ const router = createBrowserRouter([
       {
         path: "/inbox",
         element:<BakeryBlissRealtimeChat></BakeryBlissRealtimeChat>
+      },
+      {
+        path: "/becomeABaker",
+        element: <BecomeABaker></BecomeABaker>
+      },
+      {
+        path: "/customerOrder",
+        element: <CustomerOrder></CustomerOrder>
+      },
+      {
+        path: "/products",
+        element: <Products></Products>
       }
       
     ]

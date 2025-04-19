@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom';
 
 const Root = () => {
     return (
-        <div>
+        <div >
             <Header></Header>
-            <div className=' mx-auto'><Outlet></Outlet></div>
+            <div className='mx-auto'><Outlet></Outlet></div>
             
         </div>
     );
