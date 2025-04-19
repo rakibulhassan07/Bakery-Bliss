@@ -13,7 +13,14 @@ const AuthProvider = ({children}) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
       };
-     
+      const updateUserProfile = (name, photo) => {
+        setLoading(true);
+        return updateProfile(auth.currentUser, {
+          displayName: name,
+          photoURL: photo,
+        });
+      };
+        
       const signIn=(email,password)=>{
         setLoading(true);
         return signInWithEmailAndPassword(auth,email,password);
@@ -35,10 +42,12 @@ const AuthProvider = ({children}) => {
      
         const authInfo={
              user,
+             setUser,
              createUser,
              loading,
              logOut,
-             signIn
+             signIn,
+             updateUserProfile
         } 
     return (
         <AuthContext.Provider value={authInfo}> 

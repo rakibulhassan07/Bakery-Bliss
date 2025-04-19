@@ -11,10 +11,11 @@ import { BsPersonFill } from "react-icons/bs";
 import { FaPhoneAlt } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../provider/AuthProvider";
+import { i } from "motion/react-client";
 
 
 const Register = () => {
-  const {createUser} =useContext(AuthContext);
+  const {createUser,updateUserProfile} =useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
@@ -47,7 +48,7 @@ const Register = () => {
     
     const formData = new FormData();
     formData.append("image", file);
-
+    
     // Replace YOUR_IMGBB_API_KEY with your actual ImgBB API key
     const url = `https://api.imgbb.com/1/upload?key=${
       import.meta.env.VITE_IMGBB_API_KEY
@@ -62,6 +63,7 @@ const Register = () => {
       const data = await response.json();
       if (data.success) {
         setImageUrl(data.data.url);
+        
         toast.success("Image uploaded successfully!");
       } else {
         toast.success("Image uploaded successfully!");
@@ -71,56 +73,73 @@ const Register = () => {
     }
   };
 
-  const onSubmit = async (data) => {
+  const onsubmit = async (data) => {
+    
     try {
       setLoading(true);
-      createUser(data.email, data.password)
+      await createUser(data.email, data.password)
         .then((result) => {
-          const user = result.user;
-          console.log("User created: ", user);
+          updateUserProfile(data.name, imageUrl)
+            .then(() => {
+              const saveUser = {
+                name: data.email,
+                photo: imageUrl,
+                email: data.email,
+                phone: data.phone,
+                password: data.password,
+                role: "customer",
+              };
+              fetch("http://localhost/BackEnd/api/index.php/users", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(saveUser),
+              })
+                .then((res) => res.json())
+                .then((data) => {
+                  if (data.insertedId) {
+                    reset();
+                    Swal.fire("User Created Successfully");
+                    navigate("/dashboard");
+                  }
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          toast.success("Registration Successful!", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          setTimeout(() => {
+            const redirectPath = location.state?.from?.pathname || "/";
+            navigate(redirectPath, { replace: true });
+          }, 3000);
         })
-        .catch((error) => {
-          console.error(error)
-        })
-      // Prepare user data for APIs
-      const saveUser = {
-        name: data.name,
-        photo: imageUrl, // This will match 'image' in PHP
-        email: data.email,
-        phone: data.phone,
-        password: data.password,
-      };
-      
-      // Send data to your PHP API
-      const response = await fetch("http://localhost/BackEnd/api/index.php/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(saveUser),
-      });
-      
-      const result = await response.json();
-      
-      if (result.success) {
-        reset();
-        toast.success("Registration Successful!");
-        
-        // Navigate after a short delay
-        setTimeout(() => {
-          const redirectPath = location.state?.from?.pathname || "/";
-          navigate(redirectPath, { replace: true });
-        }, 2000);
-      } else {
-        toast.error(result.error || "Registration failed!");
-      }
+        .catch((err) => {
+          console.log(err);
+          toast.error("mail is already exist", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          setLoading(false);
+        });
+
+      // Changed to 3000ms to match toast duration
     } catch (error) {
-      console.error("Registration error:", error);
-      toast.error("Registration failed! Please try again.");
-    } finally {
-      setLoading(false);
+      toast.error("Login failed! please enter valid password and email");
     }
-  };
+  }
+
   
   return (
     <div className="min-h-screen flex justify-center items-center bg-[linear-gradient(135deg,_#fff3e0_0%,_#ffe0b2_50%,_#ffcc80_100%)]">
@@ -183,7 +202,7 @@ const Register = () => {
                 <MdOutlineBakeryDining className="text-amber-700 text-5xl" />
               </div>
             </div>
-            <form onSubmit={handleSubmit(onSubmit)} className="card-body px-8 pb-8">
+            <form onSubmit={handleSubmit(onsubmit)} className="card-body px-8 pb-8">
               <h1 className="text-center font-bold text-2xl text-amber-800 mb-2">
                 Bakery Bliss Register
               </h1>
@@ -392,5 +411,7 @@ const Register = () => {
     </div>
   );
 };
+// Exporting the Register component as default
+
 
 export default Register;

@@ -7,13 +7,14 @@ import { AuthContext } from "../../provider/AuthProvider";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user,logOut } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  
+
   const handleSingOut = () => {
-    logOut()
+    logOut();
   };
 
   // Active link style
@@ -111,7 +112,24 @@ const Header = () => {
           </Link>
 
           {/* Login button */}
-          {user ? (
+
+          <div className="flex items-center gap-4 flex-none">
+            {user && user?.email ? (
+              <div>
+                <img
+                  src={user?.photoURL}
+                  alt="User Profile"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <p className="text-amber-800 ">{user.displayName}</p>
+              </div>
+            ) : (
+              <iframe
+                className="w-12 h-12 md:w-16 md:h-16"
+                src="https://lottie.host/embed/21c0f04d-247e-460b-921b-f165217a9ef3/Mov0qGZhSD.json"
+              ></iframe>
+            )}
+             {user ? (
             <button onClick={handleSingOut} className="btn bg-gradient-to-r from-amber-600 to-amber-700 text-white hover:from-amber-700 hover:to-amber-800 border-0 shadow-md">
               Logout
             </button>
@@ -123,6 +141,7 @@ const Header = () => {
               Login
             </Link>
           )}
+          </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">

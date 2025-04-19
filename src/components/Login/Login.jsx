@@ -59,26 +59,6 @@ const Login = () => {
             .finally(() => {
                 setLoading(false);
             });
-
-
-       // if (!validatePassword(password)) {
-        //    return;
-       // }
-        
-       // try {
-         //   setLoading(true);
-          //  await signIn(email, password);
-         //   toast.success("Welcome back to the Bakery Portal!");
-            // Wait for toast to be visible before navigation
-        //    setTimeout(() => {
-        //        const redirectPath = location.state?.from?.pathname || "/bakery-dashboard";
-      //          navigate(redirectPath, { replace: true });
-      //      }, 1000); // Short delay to ensure toast is visible
-      //  } catch (error) {
-     //       toast.error("Login failed! Please check your credentials");
-     //   } finally {
-    //        setLoading(false);
-     //   }
     };
 
     return (
