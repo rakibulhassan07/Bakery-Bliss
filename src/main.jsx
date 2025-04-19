@@ -16,6 +16,10 @@ import BakeryBlissRealtimeChat from './components/BakeryBlissRealtimeChat/Bakery
 import BecomeABaker from './components/BecomeABaker/BecomeABaker.jsx';
 import CustomerOrder from './components/CustomerOrder/CustomerOrder.jsx';
 import Products from './components/Products/Products.jsx';
+import Deshboard from './components/Deshboard/Deshboard.jsx';
+import Cart from './components/Cart/Cart.jsx';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import MyBakery from './components/MyBakery/MyBakery.jsx';
 
 const router = createBrowserRouter([
   {
@@ -49,16 +53,30 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products></Products>
+      },
+      {
+        path: "/dashboard",
+        element: <Deshboard></Deshboard>        
+      },
+      {
+        path:"/cart",
+        element:<Cart></Cart>
+      },
+      {
+        path: "/myBakery",
+        element: <MyBakery></MyBakery>
       }
       
     ]
   },
 ]);
+const queryClient = new QueryClient();
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
-   
-  </StrictMode>,
+  <AuthProvider>
+  <QueryClientProvider client={queryClient}>
+  <RouterProvider router={router} /> 
+  </QueryClientProvider>
+  </AuthProvider>
+</StrictMode>
 )

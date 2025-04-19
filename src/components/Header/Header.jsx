@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { MdOutlineBakeryDining } from "react-icons/md";
 import { FaShoppingCart } from "react-icons/fa";
@@ -7,15 +7,35 @@ import { AuthContext } from "../../provider/AuthProvider";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext);
+  const dropdownRef = useRef(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const toggleProfileDropdown = () => {
+    setIsProfileDropdownOpen(!isProfileDropdownOpen);
+  };
+
   const handleSingOut = () => {
     logOut();
   };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsProfileDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // Active link style
   const activeStyle = "bg-amber-100 text-amber-800 font-semibold";
@@ -111,17 +131,49 @@ const Header = () => {
             </div>
           </Link>
 
-          {/* Login button */}
-
+          {/* User profile and dropdown */}
           <div className="flex items-center gap-4 flex-none">
             {user && user?.email ? (
-              <div>
-                <img
-                  src={user?.photoURL}
-                  alt="User Profile"
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-                <p className="text-amber-800 ">{user.displayName}</p>
+              <div className="relative" ref={dropdownRef}>
+                <div 
+                  className="cursor-pointer"
+                  onClick={toggleProfileDropdown}
+                >
+                  <img
+                    src={user?.photoURL}
+                    alt="User Profile"
+                    className="w-10 h-10 rounded-full object-cover hover:ring-2 hover:ring-amber-400"
+                  />
+                  <p className="text-amber-800">{user.displayName}</p>
+                </div>
+                
+                {/* Profile dropdown menu */}
+                {isProfileDropdownOpen && (
+                  <motion.div 
+                    className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <NavLink 
+                      to="/dashboard" 
+                      className="block px-4 py-2 text-amber-800 hover:bg-amber-100"
+                      onClick={() => setIsProfileDropdownOpen(false)}
+                    >
+                      Dashboard
+                    </NavLink>
+                    <div className="border-t border-gray-100"></div>
+                    <button
+                      onClick={() => {
+                        handleSingOut();
+                        setIsProfileDropdownOpen(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 text-amber-800 hover:bg-amber-100"
+                    >
+                      Logout
+                    </button>
+                  </motion.div>
+                )}
               </div>
             ) : (
               <iframe
@@ -129,132 +181,24 @@ const Header = () => {
                 src="https://lottie.host/embed/21c0f04d-247e-460b-921b-f165217a9ef3/Mov0qGZhSD.json"
               ></iframe>
             )}
-             {user ? (
-            <button onClick={handleSingOut} className="btn bg-gradient-to-r from-amber-600 to-amber-700 text-white hover:from-amber-700 hover:to-amber-800 border-0 shadow-md">
-              Logout
-            </button>
-          ) : (
-            <Link
-              to="/Login"
-              className="btn bg-gradient-to-r from-amber-600 to-amber-700 text-white hover:from-amber-700 hover:to-amber-800 border-0 shadow-md"
-            >
-              Login
-            </Link>
-          )}
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={toggleMenu}
-              className="btn btn-ghost btn-circle text-amber-800"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            
+            {user ? (
+              <button onClick={handleSingOut} className="hidden btn bg-gradient-to-r from-amber-600 to-amber-700 text-white hover:from-amber-700 hover:to-amber-800 border-0 shadow-md">
+                Logout
+              </button>
+            ) : (
+              <Link
+                to="/Login"
+                className="btn bg-gradient-to-r from-amber-600 to-amber-700 text-white hover:from-amber-700 hover:to-amber-800 border-0 shadow-md"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h7"
-                />
-              </svg>
-            </button>
+                Login
+              </Link>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Mobile menu dropdown */}
-      {isMenuOpen && (
-        <motion.div
-          className="md:hidden py-2 px-4 bg-amber-50 shadow-inner"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <ul className="space-y-2">
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  `block px-3 py-2 rounded-md ${
-                    isActive
-                      ? "bg-amber-200 text-amber-800 font-medium"
-                      : "text-amber-700 hover:bg-amber-100"
-                  }`
-                }
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/Products"
-                className={({ isActive }) =>
-                  `block px-3 py-2 rounded-md ${
-                    isActive
-                      ? "bg-amber-200 text-amber-800 font-medium"
-                      : "text-amber-700 hover:bg-amber-100"
-                  }`
-                }
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Products
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/CustomOrders"
-                className={({ isActive }) =>
-                  `block px-3 py-2 rounded-md ${
-                    isActive
-                      ? "bg-amber-200 text-amber-800 font-medium"
-                      : "text-amber-700 hover:bg-amber-100"
-                  }`
-                }
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Custom Orders
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/Become_a_Baker"
-                className={({ isActive }) =>
-                  `block px-3 py-2 rounded-md ${
-                    isActive
-                      ? "bg-amber-200 text-amber-800 font-medium"
-                      : "text-amber-700 hover:bg-amber-100"
-                  }`
-                }
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Become a Baker
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/Inbox"
-                className={({ isActive }) =>
-                  `block px-3 py-2 rounded-md ${
-                    isActive
-                      ? "bg-amber-200 text-amber-800 font-medium"
-                      : "text-amber-700 hover:bg-amber-100"
-                  }`
-                }
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Inbox
-              </NavLink>
-            </li>
-          </ul>
-        </motion.div>
-      )}
+    
     </div>
   );
 };

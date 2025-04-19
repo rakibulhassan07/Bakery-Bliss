@@ -74,7 +74,7 @@ const Register = () => {
   };
 
   const onsubmit = async (data) => {
-    
+    console.log(data)
     try {
       setLoading(true);
       await createUser(data.email, data.password)
@@ -82,7 +82,7 @@ const Register = () => {
           updateUserProfile(data.name, imageUrl)
             .then(() => {
               const saveUser = {
-                name: data.email,
+                name: data.name,
                 photo: imageUrl,
                 email: data.email,
                 phone: data.phone,

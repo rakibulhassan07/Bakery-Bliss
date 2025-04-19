@@ -54,7 +54,7 @@ const Login = () => {
             })
             .catch((error) => {
                 console.error(error);
-                toast.error("Login failed! Please check your credentials");
+                toast.error("Login failed! Please enter valid password and email.");
             })
             .finally(() => {
                 setLoading(false);
