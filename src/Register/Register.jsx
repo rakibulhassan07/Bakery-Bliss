@@ -77,7 +77,7 @@ const Register = () => {
       createUser(data.email, data.password)
         .then((result) => {
           const user = result.user;
-          console.log("User created:", user);
+          console.log("User created: ", user);
         })
         .catch((error) => {
           console.error(error)
