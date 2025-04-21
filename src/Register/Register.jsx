@@ -72,7 +72,7 @@ const Register = () => {
       setLoading(false);
     }
   };
-
+  // Handle form submission
   const onsubmit = async (data) => {
     console.log(data)
     try {
