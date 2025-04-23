@@ -85,24 +85,15 @@ const Header = () => {
             </li>
             <li>
               <NavLink
-                to="/customerOrder"
+                to="/dashboard"
                 className={({ isActive }) =>
                   isActive ? activeStyle : "text-amber-800 hover:bg-amber-100"
                 }
               >
-                Custom Orders
+                Dashboard
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/becomeABaker"
-                className={({ isActive }) =>
-                  isActive ? activeStyle : "text-amber-800 hover:bg-amber-100"
-                }
-              >
-                Become a Baker
-              </NavLink>
-            </li>
+            
             <li>
               <NavLink
                 to="/Inbox"
@@ -156,11 +147,11 @@ const Header = () => {
                     transition={{ duration: 0.2 }}
                   >
                     <NavLink 
-                      to="/dashboard" 
+                      to="/MyProfile" 
                       className="block px-4 py-2 text-amber-800 hover:bg-amber-100"
                       onClick={() => setIsProfileDropdownOpen(false)}
                     >
-                      Dashboard
+                      My Profile
                     </NavLink>
                     <div className="border-t border-gray-100"></div>
                     <button

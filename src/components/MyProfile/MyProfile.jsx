@@ -4,7 +4,7 @@ import { AuthContext } from '../../provider/AuthProvider';
 import useUsers from '../Hook/useUsers';
 import { NavLink } from 'react-router-dom';
 
-const Dashboard = () => {
+const MyProfile = () => {
     const { user } = useContext(AuthContext);
     const [users] = useUsers();
     // Only find the user if 'user' exists and has an email property
@@ -34,7 +34,7 @@ const Dashboard = () => {
         );
     };
 
-    // Dashboard card component for reusability
+    // Myrofile card component for reusability
     const DashboardCard = ({ icon, title, value, color }) => (
         <div className="bg-white rounded-lg shadow-md p-6 flex items-center space-x-4 hover:shadow-lg transition-shadow">
             <div className={`p-3 rounded-full ${color}`}>
@@ -95,8 +95,8 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                {/* Dashboard stats - centered */}
-                <h2 className="text-2xl font-semibold text-amber-800 mb-4 text-center">Dashboard Overview</h2>
+                {/* Myrofile stats - centered */}
+                <h2 className="text-2xl font-semibold text-amber-800 mb-4 text-center">Myrofile Overview</h2>
                 <div className="flex justify-center mb-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl">
                         <DashboardCard 
@@ -130,4 +130,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default MyProfile;
