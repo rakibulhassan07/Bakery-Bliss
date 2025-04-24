@@ -26,6 +26,7 @@ import DashboardLayout from './components/Layout/DashboardLayout.jsx';
 import AdminRoute from './components/privateRoute/AdminRoute.jsx';
 import ManageUsers from './components/Deshboard/Admin/ManageUsers.jsx';
 import AddProduct from './components/MyBakery/AddProduct.jsx';
+import ProductDetails from './components/Products/ProductDetails.jsx';
 
 const router = createBrowserRouter([
   {
@@ -53,7 +54,10 @@ const router = createBrowserRouter([
          element:<PrivateRoute> <AddProduct></AddProduct> </PrivateRoute>
 
       },
-      
+      {
+        path: "/productDetails/:id",
+        element: <PrivateRoute> <ProductDetails></ProductDetails> </PrivateRoute>
+      },
       
       
       {
