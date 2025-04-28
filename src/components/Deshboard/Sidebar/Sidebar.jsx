@@ -63,7 +63,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="h-full p-4 bg-[linear-gradient(90deg,_#e7ffd9_0%,_#d9d3ff_100%)]">
+    <div className="h-full p-4 bg-[linear-gradient(to_right,_#fff3e0_0%,_#ffe0b2_50%,_#ffcc80_100%)] ">
       <nav className="space-y-2 pt-9">
         {DependRole()}
       </nav>
