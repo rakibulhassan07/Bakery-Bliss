@@ -114,7 +114,7 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(to_right,_#fff3e0_0%,_#ffe0b2_50%,_#ffcc80_100%)] py-8">
+    <div className="min-h-screen n py-8">
       <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
         <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">Add New Product</h2>
 

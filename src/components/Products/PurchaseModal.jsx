@@ -1,11 +1,10 @@
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useContext, useState, useEffect } from "react";
-
+import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
-import useUsers from "../Hook/useUsers";
 import useProducts from "../Hook/useProducts";
-import { useForm } from "react-hook-form";
+import useUsers from "../Hook/useUsers";
 
 
 const PurchaseModal = ({ isOpen, setIsOpen, product }) => {
@@ -91,7 +90,7 @@ const PurchaseModal = ({ isOpen, setIsOpen, product }) => {
       };
 
       // Send order to database
-      const response = await fetch('http://localhost/BuyBuddiesBackend/api/index.php/order', {
+      const response = await fetch('http://localhost/BackEnd/api/index.php/order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
