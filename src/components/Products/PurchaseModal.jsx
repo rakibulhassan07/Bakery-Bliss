@@ -110,7 +110,7 @@ const PurchaseModal = ({ isOpen, setIsOpen, product }) => {
       reset();
 
     } catch (error) {
-      alert("Order placed successfully!");
+      alert("Order fail successfully!");
       setIsOpen(false);
       reset();
     } finally {
