@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const Card = ({ product }) => {
   const [isHovered, setIsHovered] = useState(false);
   const {
-    product_photo,
-    product_name,
+    product_photo, //product photo
+    product_name,  //product name
     product_price,
     product_details,
     product_quantity,
@@ -29,7 +29,7 @@ const Card = ({ product }) => {
             Only {product_quantity} left
           </div>
         )}
-
+        
         {/* Image container with gradient overlay on hover */}
         <div className="relative h-40 overflow-hidden">
           <img
