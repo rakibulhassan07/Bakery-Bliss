@@ -6,8 +6,8 @@ const Card = ({ product }) => {
   const {
     product_photo, //product photo
     product_name,  //product name
-    product_price,
-    product_details,
+    product_price,  //product price 
+    product_details, // product details
     product_quantity,
     id,
   } = product;
