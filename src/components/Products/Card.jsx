@@ -8,8 +8,8 @@ const Card = ({ product }) => {
     product_name,  //product name
     product_price,  //product price 
     product_details, // product details
-    product_quantity,
-    id,
+    product_quantity,//product quantity
+    id, //id 
   } = product;
 
   return (
